@@ -186,6 +186,8 @@ while not FINALIZAR:
                     PONTOS_SPORT = 0
                     PONTOS_NAUTICO = 0
                     PONTOS_SANTA = 0
+                    TIMER = 1800
+                    
 
             if event.type == pygame.QUIT:
                 pygame.quit()
