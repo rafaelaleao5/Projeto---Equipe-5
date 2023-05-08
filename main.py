@@ -3,17 +3,17 @@ import random
 import sys 
 
 #TAMANHO DA TELA
-LARGURA = 1280
-ALTURA = 720
+LARGURA = 1920
+ALTURA = 1080
 
 #ARQUIVOS
-BG = 'Projeto---Equipe-5/assets/imgs/fundo.jpg'
-FONTE = 'Projeto---Equipe-5/assets/fonts/PixelGameFont.ttf'
-ALVO_SPORT ='Projeto---Equipe-5/assets/imgs/sport-recife.png'
-ALVO_NAUTICO ='Projeto---Equipe-5/assets/imgs/nautico.png'
-ALVO_SANTA ='Projeto---Equipe-5/assets/imgs/santa.png'
-MIRA = 'Projeto---Equipe-5/assets/imgs/dedo.png'
-DISPARO = 'Projeto---Equipe-5/assets/audio/clique.mp3'
+FUNDO = 'assets/imgs/fundo.jpg'
+FONTE = 'assets/fonts/PixelGameFont.ttf'
+ALVO_SPORT ='assets/imgs/sport-recife.png'
+ALVO_NAUTICO ='assets/imgs/nautico.png'
+ALVO_SANTA ='assets/imgs/santa.png'
+MIRA = 'assets/imgs/dedo.png'
+CLIQUE = 'assets/audio/clique.mp3'
 
 #PONTUAÇÃO
 PONTOS_SPORT = 0
@@ -58,7 +58,7 @@ class Mira(pygame.sprite.Sprite):
         self.image = pygame.image.load(MIRA).convert_alpha()
         self.image = pygame.transform.scale(self.image, (50,50))
         self.rect = self.image.get_rect()
-        self.sound = pygame.mixer.Sound(DISPARO)
+        self.sound = pygame.mixer.Sound(CLIQUE)
     
     def update(self):   #predefinido pela Sprite
         self.rect.center = pygame.mouse.get_pos()
@@ -99,12 +99,12 @@ pygame.init() #sempre em cima para evitar bugs
 
 screen = pygame.display.set_mode((LARGURA,ALTURA))
 
-bg =  pygame.image.load(BG).convert() #convert ajuda na adqueção da imagem
-bg = pygame.transform.scale(bg, (LARGURA,ALTURA))
+fundo =  pygame.image.load(FUNDO).convert() #convert ajuda na adqueção da imagem
+fundo = pygame.transform.scale(fundo, (LARGURA,ALTURA))
 
 clock = pygame.time.Clock()
 
-font = pygame.font.Font(FONTE, 30)
+fonte = pygame.font.Font(FONTE, 30)
 
 pygame.display.set_caption('Tiro ao alvo')
 
@@ -149,7 +149,7 @@ while not FINALIZAR:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mira.shoot()
                 
-        screen.blit(bg, (0,0))
+        screen.blit(fundo, (0,0))
         grupo_de_alvos_sport.draw(screen)
         grupo_de_alvos_nautico.draw(screen)
         grupo_de_alvos_santa.draw(screen)
@@ -158,21 +158,20 @@ while not FINALIZAR:
             
         mira_group.update()
             
-        score_sport = font.render(f'Sport: {int(PONTOS_SPORT)} ', True, (0,0,0))
-        score_nautico = font.render(f'Nautico: {int(PONTOS_NAUTICO)} ', True, (0,0,0))
-        score_santa = font.render(f'Santa Cruz: {int(PONTOS_SANTA)} ', True, (0,0,0))
+        score_sport = fonte.render(f'Sport: {int(PONTOS_SPORT)} ', True, (0,0,0))
+        score_nautico = fonte.render(f'Nautico: {int(PONTOS_NAUTICO)} ', True, (0,0,0))
+        score_santa = fonte.render(f'Santa Cruz: {int(PONTOS_SANTA)} ', True, (0,0,0))
         
         screen.blit(score_sport, (50,50))
         screen.blit(score_nautico, (50,100))
         screen.blit(score_santa, (50,150))
             
-        tempo = font.render(f'Tempo: {TIMER/60:.1f} s',True, (0,0,0))
+        tempo = fonte.render(f'Tempo: {TIMER/60:.1f} s',True, (0,0,0))
         screen.blit(tempo, (50,200))
             
         TIMER -=1
             
         if TIMER < 0:
-            TIMER = 600
             GAME_PAUSED = not GAME_PAUSED
             
             
@@ -192,10 +191,10 @@ while not FINALIZAR:
                 pygame.quit()
                 sys.exit()
                 
-        pause = font.render(f"PRESSIONE ESC PARA INICIAR   ",True, (255,255,255))
-        points_sport = font.render(f"PONTUACAO SPORT: {PONTOS_SPORT} ",True, (255,255,255))
-        points_nautico = font.render(f"PONTUACAO NAUTICO: {PONTOS_NAUTICO} ",True, (255,255,255))
-        points_santa = font.render(f"PONTUACAO SANTA: {PONTOS_SANTA} ",True, (255,255,255))
+        pause = fonte.render(f"PRESSIONE ESC PARA INICIAR   ",True, (255,255,255))
+        points_sport = fonte.render(f"PONTUACAO SPORT: {PONTOS_SPORT} ",True, (255,255,255))
+        points_nautico = fonte.render(f"PONTUACAO NAUTICO: {PONTOS_NAUTICO} ",True, (255,255,255))
+        points_santa = fonte.render(f"PONTUACAO SANTA: {PONTOS_SANTA} ",True, (255,255,255))
         
         pause_rect = pause.get_rect(center = (LARGURA/2, ALTURA/2))
         points_rect_sport = points_sport.get_rect(center = (LARGURA/2, ALTURA/2-50))
